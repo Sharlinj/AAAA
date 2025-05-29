@@ -1,0 +1,29 @@
+.payment-container {
+    max-width: 450px;
+    margin: 40px auto;
+    background: #fafafa;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  }
+  
+  .full-width {
+    width: 100%;
+  }
+  
+  .error {
+    color: #b00020;
+    margin-top: 15px;
+    font-weight: bold;
+  }
+  
+  .success {
+    color: #388e3c;
+    margin-top: 15px;
+    font-weight: bold;
+  }
+  
+  mat-radio-button {
+    margin-right: 15px;
+  }
+  

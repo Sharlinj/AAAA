@@ -1,0 +1,88 @@
+<div class="payment-container">
+    <h2>Make Payment</h2>
+    <form (ngSubmit)="submitPayment()">
+      
+      <!-- Package & Order Details -->
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Order ID</mat-label>
+        <input matInput [(ngModel)]="payment.orderId" name="orderId" readonly>
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Customer ID</mat-label>
+        <input matInput [(ngModel)]="payment.customerId" name="customerId" readonly>
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Package</mat-label>
+        <input matInput [(ngModel)]="payment.packageName" name="packageName" readonly>
+      </mat-form-field>
+  
+      <!-- Payment Mode Selection -->
+      <mat-label>Payment Mode</mat-label>
+      <mat-radio-group [(ngModel)]="payment.paymentMode" name="paymentMode">
+        <mat-radio-button value="UPI">UPI</mat-radio-button>
+        <mat-radio-button value="CARD">Card</mat-radio-button>
+        <mat-radio-button value="NETBANKING">Net Banking</mat-radio-button>
+      </mat-radio-group>
+  
+      <br /><br />
+  
+      <!-- UPI Details -->
+      <div *ngIf="payment.paymentMode === 'UPI'">
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>UPI ID</mat-label>
+          <input matInput [(ngModel)]="payment.upiId" name="upiId" placeholder="example@bank" required>
+        </mat-form-field>
+      </div>
+  
+      <!-- Card Details -->
+      <div *ngIf="payment.paymentMode === 'CARD'">
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Card Holder Name</mat-label>
+          <input matInput [(ngModel)]="payment.cardHolderName" name="cardHolderName" required>
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Card Number</mat-label>
+          <input matInput [(ngModel)]="payment.cardNumber" name="cardNumber" maxlength="16" required>
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Expiry Date (MM/YY)</mat-label>
+          <input matInput [(ngModel)]="payment.expiryDate" name="expiryDate" placeholder="MM/YY" required>
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>CVV</mat-label>
+          <input matInput type="password" [(ngModel)]="payment.cvv" name="cvv" maxlength="3" required>
+        </mat-form-field>
+      </div>
+  
+      <!-- Net Banking Details -->
+      <div *ngIf="payment.paymentMode === 'NETBANKING'">
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Bank Name</mat-label>
+          <input matInput [(ngModel)]="payment.bankName" name="bankName" required>
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Account Number</mat-label>
+          <input matInput [(ngModel)]="payment.accountNumber" name="accountNumber" required>
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>IFSC Code</mat-label>
+          <input matInput [(ngModel)]="payment.ifscCode" name="ifscCode" required>
+        </mat-form-field>
+      </div>
+  
+      <!-- Submit Button -->
+      <button mat-raised-button color="primary" type="submit">Pay Now</button>
+  
+      <!-- Error / Success Messages -->
+      <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+      <div *ngIf="successMessage" class="success">{{ successMessage }}</div>
+    </form>
+  </div>
+  
