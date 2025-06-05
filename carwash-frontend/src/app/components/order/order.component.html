@@ -1,0 +1,8 @@
+<div class="order-container">
+  <h2>Your Orders</h2>
+  <mat-card *ngFor="let order of orders" class="order-card">
+    <p><strong>Package:</strong> {{ order.packageName }}</p>
+    <p><strong>Date:</strong> {{ order.orderDate }}</p>
+    <p><strong>Status:</strong> {{ order.status }}</p>
+  </mat-card>
+</div>

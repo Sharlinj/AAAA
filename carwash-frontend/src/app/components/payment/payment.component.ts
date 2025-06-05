@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Payment } from '../../models/payment.model';
+import { Payment } from 'src/app/models/payment.model';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -24,7 +24,7 @@ export class PaymentComponent {
     this.errorMessage = '';
     this.successMessage = '';
 
-    // Validation based on payment mode
+    // Validation
     if (this.payment.paymentMode === 'UPI') {
       if (!this.payment.upiId) {
         this.errorMessage = 'Please enter UPI ID.';
@@ -55,16 +55,38 @@ export class PaymentComponent {
       return;
     }
 
-    // HTTP POST to backend payment service
+    // 1️⃣ Step 1: Post Payment to backend
     this.http.post('http://localhost:8082/api/payments', this.payment)
       .subscribe({
         next: () => {
-          this.successMessage = 'Payment successful!';
+          this.successMessage = '✅ Payment successful!';
+          this.createOrder(); // Create order only if payment succeeds
+        },
+        error: (err) => {
+          this.errorMessage = '❌ Payment failed. Please try again.';
+          console.error('Payment error:', err);
+        }
+      });
+  }
+
+  // 2️⃣ Step 2: Order creation logic
+  createOrder() {
+    const orderPayload = {
+      customerId: this.payment.customerId,
+      packageName: this.payment.packageName,
+      orderDate: new Date().toISOString().split('T')[0],
+      status: 'Placed'
+    };
+
+    this.http.post('http://localhost:8081/api/orders', orderPayload)
+      .subscribe({
+        next: () => {
+          this.successMessage += ' Order placed successfully!';
           this.resetForm();
         },
         error: (err) => {
-          this.errorMessage = 'Payment failed. Please try again.';
-          console.error('Payment error:', err);
+          console.error('Order creation failed:', err);
+          this.errorMessage = 'Payment successful, but order failed to place.';
         }
       });
   }

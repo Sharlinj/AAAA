@@ -5,6 +5,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { PackageComponent } from './components/package/package.component';
 import { PaymentComponent } from './components/payment/payment.component';
+import { OrderComponent } from './components/order/order.component';
 import { AuthGuard } from './guards/auth.guard'; // Make sure this exists
 
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'packages', component: PackageComponent, canActivate: [AuthGuard] },
   { path: 'payment', component: PaymentComponent, canActivate: [AuthGuard] },
+  { path: 'orders', component: OrderComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '' } // fallback route
 ];
 
